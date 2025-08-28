@@ -1,0 +1,30 @@
+name: Build & Run Hello
+
+on:
+  push:
+    paths:
+      - "src/**.java"
+      - "pom.xml"
+      - ".github/workflows/hello.yml"
+  workflow_dispatch:
+
+jobs:
+  build-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Build (compile & test)
+        run: mvn -B package
+
+      - name: Run Hello.java
+        run: mvn -q exec:java -Dexec.mainClass="com.example.Hello"
+      - name: Run Java Program
+        run: java -cp target/hello-maven-1.0-SNAPSHOT.jar com.example.Hello
