@@ -2,23 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('compile') {
             steps {
-                echo "Hello Build stage"
-                sh 'hostname'
+                sh 'mvn compile'
             }
         }
         stage('Test') {
             steps {
-                echo "Hello Test Stage"
-                sh 'pwd'
-            }
+                sh 'mvn test'
+            }  
         }
-        stage('Deploy') {
+        stage('package') {
             steps {
-                echo "Hello Deploy Stage"
-                sh 'date'
-            }
+                sh 'mvn package'
+            }  
         }
+        stage('deploy') {
+            steps {
+                sh 'java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App'
+            }  
+        }    
     }
 }
