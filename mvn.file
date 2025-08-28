@@ -1,4 +1,4 @@
-name: Run Maven Build
+name: Run Mvn Build
 
 on:
   push:          # Runs when you push to repo
